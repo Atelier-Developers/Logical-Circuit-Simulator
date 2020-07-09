@@ -1,7 +1,6 @@
 from flipflop.flipflop import FlipFlop
-from gate.and_gate import And
 from gate.not_gate import Not
-from gate.or_gate import Or
+from latch.d import D_Latch
 
 
 class D_FlipFlop(FlipFlop):
@@ -9,15 +8,14 @@ class D_FlipFlop(FlipFlop):
         super().__init__(clock, input)
 
     def build(self):
-        not0 = Not(self.input)
-        and1 = And((self.input, self.clock))
-        and2 = And((not0, self.clock))
+        not1 = Not(self.clock)
 
-        or1 = Or(None)
-        or2 = Or(None)
-        not1 = Not(or1)
-        not2 = Not(or2)
-        or1.set_inputs((not2, and2))
-        or2.set_inputs((not1, and1))
+        master = D_Latch(self.clock, self.input)
+        slave = D_Latch(not1, master)
 
-        self.q = or1.output
+        self.output = slave.output
+        self.outputp = slave.outputp
+        self.gates = master.gates + slave.gates + [not1]
+
+    def logic(self):
+        self.output.logic()

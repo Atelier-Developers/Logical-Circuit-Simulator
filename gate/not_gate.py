@@ -6,4 +6,10 @@ class Not(Gate):
         super().__init__(input)
 
     def logic(self):
-        self.output = 0 if self.inputs == 1 else 1
+        if self.calc:
+            return self.output
+        self.calc = True
+        self.inputs.logic()
+        self.output = 0 if self.inputs.output == 1 else 1
+        self.calc = False
+        return self.output

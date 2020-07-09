@@ -1,10 +1,14 @@
-class FlipFlop:
+from gate.gate import Gate
+
+
+class Latch:
     def __init__(self, clock, input):
         self.clock = clock
         self.input = input
+        self.structure = None
+        self.output: Gate = None
+        self.outputp: Gate = None
         self.gates = []
-        self.output = None
-        self.outputp = None
 
         self.build()
 
@@ -18,13 +22,5 @@ class FlipFlop:
         self.input = input
         self.build()
 
-    def set(self):
-        self.output.output = 1
-        self.outputp.output = 0
-
-    def reset(self):
-        self.output.output = 0
-        self.outputp.output = 1
-
-    def q(self):
-        return self.output.output
+    def logic(self):
+        return self.output.logic()

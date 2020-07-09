@@ -1,7 +1,8 @@
 class Gate:
-    def __init__(self, inputs: tuple):
+    def __init__(self, inputs):
         self.inputs = inputs
         self.output = None
+        self.calc = False
 
     def logic(self):
         pass
