@@ -25,3 +25,4 @@ class D_FlipFlop(FlipFlop):
         self.output.logic(depend + [self])
         if D_FlipFlop.DEBUGMODE:
             print(self)
+        return self.q()
