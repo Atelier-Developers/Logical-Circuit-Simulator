@@ -3,8 +3,11 @@ from gate.and_gate import And
 from gate.or_gate import Or
 from latch.d import D_Latch
 from signals.signal import Signal
-
 from gate.not_gate import Not
+
+import sys
+
+sys.setrecursionlimit(1000)  # default is 1000
 
 
 def turn_off_debug(every_thing=True):
@@ -52,7 +55,7 @@ def johnson_counter(n=100):
     bits[0].set_input(Not(bits[-1], "not"))
     bits[0].reset()
 
-    for _ in range(400):
+    for _ in range(100):
         clock.pulse()
         bits[-1].logic()
         print("".join([str(b.q()) for b in bits]))
