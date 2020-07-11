@@ -12,21 +12,25 @@ class D_Latch(Latch):
 
     def build(self):
         not0 = Not(self.input, f"{self.name}_not0")
-        and1 = And((self.input, self.clock), f"{self.name}_and1")
-        and2 = And((not0, self.clock), f"{self.name}_and2")
+        and1 = And((not0, self.clock), f"{self.name}_and1")
+        and2 = And((self.input, self.clock), f"{self.name}_and2")
 
         or1 = Or(None, f"{self.name}_or1")
         or2 = Or(None, f"{self.name}_or2")
         not1 = Not(or1, f"{self.name}_not1")
         not2 = Not(or2, f"{self.name}_not2")
-        or1.set_inputs((not2, and2))
-        or2.set_inputs((not1, and1))
+        or1.set_inputs((not2, and1))
+        or2.set_inputs((not1, and2))
 
         self.output = or1
         self.outputp = or2
 
         self.gates = [not0, and1, and2, or1, or2, not1, not2, or1, or2]
 
-    def logic(self):
-        self.output.logic()
-        print(self)
+    def logic(self, depend=[]):
+        if self in depend:
+            return self.output.output
+        self.output.logic(depend + [self])
+        if D_Latch.DEBUGMODE:
+            print(self)
+        return self.output.output

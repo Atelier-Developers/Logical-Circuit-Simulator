@@ -26,5 +26,9 @@ class Latch:
     def logic(self):
         return self.output.logic()
 
+    def set(self):
+        self.output.output = 1
+        self.outputp.output = 0
+
     def __repr__(self):
         return f"{self.name}: {self.output}"

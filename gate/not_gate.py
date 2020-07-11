@@ -7,15 +7,13 @@ class Not(Gate):
     def __init__(self, input, name="Not_Gate"):
         super().__init__(input, name)
 
-    def logic(self):
-        if self.calc:
+    def logic(self, depend=[]):
+        if self in depend:
             if Not.DEBUGMODE:
                 print(self)
             return self.output
-        self.calc = True
-        self.inputs.logic()
-        self.output = 0 if self.inputs.output == 1 else 1
-        self.calc = False
+        o = self.inputs.logic(depend + [self])
+        self.output = 0 if o == 1 else 1
         if Not.DEBUGMODE:
             print(self)
         return self.output

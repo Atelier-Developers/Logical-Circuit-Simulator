@@ -10,5 +10,5 @@ class Signal:
     def pulse(self):
         self.output = One() if self.output.logic() == 0 else Zero()
 
-    def logic(self):
+    def logic(self, depend=[]):
         return self.output.logic()
