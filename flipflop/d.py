@@ -4,8 +4,10 @@ from latch.d import D_Latch
 
 
 class D_FlipFlop(FlipFlop):
-    def __init__(self, clock, input):
-        super().__init__(clock, input)
+    DEBUGMODE = True
+
+    def __init__(self, clock, input, name="D_FlipFlop"):
+        super().__init__(clock, input, name)
 
     def build(self):
         not1 = Not(self.clock)
@@ -19,3 +21,5 @@ class D_FlipFlop(FlipFlop):
 
     def logic(self):
         self.output.logic()
+        if D_FlipFlop.DEBUGMODE:
+            print(self)

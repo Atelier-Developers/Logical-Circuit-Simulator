@@ -5,18 +5,20 @@ from latch.latch import Latch
 
 
 class D_Latch(Latch):
-    def __init__(self, clock, input):
-        super().__init__(clock, input)
+    DEBUGMODE = True
+
+    def __init__(self, clock, input, name="D_Latch"):
+        super().__init__(clock, input, name)
 
     def build(self):
-        not0 = Not(self.input)
-        and1 = And((self.input, self.clock))
-        and2 = And((not0, self.clock))
+        not0 = Not(self.input, f"{self.name}_not0")
+        and1 = And((self.input, self.clock), f"{self.name}_and1")
+        and2 = And((not0, self.clock), f"{self.name}_and2")
 
-        or1 = Or(None)
-        or2 = Or(None)
-        not1 = Not(or1)
-        not2 = Not(or2)
+        or1 = Or(None, f"{self.name}_or1")
+        or2 = Or(None, f"{self.name}_or2")
+        not1 = Not(or1, f"{self.name}_not1")
+        not2 = Not(or2, f"{self.name}_not2")
         or1.set_inputs((not2, and2))
         or2.set_inputs((not1, and1))
 
@@ -27,3 +29,4 @@ class D_Latch(Latch):
 
     def logic(self):
         self.output.logic()
+        print(self)

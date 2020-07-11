@@ -1,10 +1,12 @@
 class FlipFlop:
-    def __init__(self, clock, input):
+    def __init__(self, clock, input, name="FlipFlop"):
         self.clock = clock
         self.input = input
         self.gates = []
         self.output = None
         self.outputp = None
+
+        self.name = name
 
         self.build()
 
@@ -28,3 +30,6 @@ class FlipFlop:
 
     def q(self):
         return self.output.output
+
+    def __repr__(self):
+        return f"{self.name}: {self.output}"
