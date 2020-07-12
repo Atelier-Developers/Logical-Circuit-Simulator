@@ -3,6 +3,28 @@
 This library help to simulate Sequential Logical Circuit. 
 
 ## How to make my your Circuit
+#### Imporant Warning: 
+you should first determine flipflop, multiplexer, latch,... inputs then set or reset it.
+consider this example:
+```python
+from flipflop.d import D_FlipFlop
+from signals.signal import Signal
+from gate.not_gate import Not
+
+###### CORRECT WAY ##########
+clock = Signal(cycle=1)             # Clock for pulse
+d1 = D_FlipFlop(clock, None, "d1")  # make our D flipflop
+not1 = Not(d1, "not")               # make not Gate with d1 output
+d1.set_input(not1)                  # set not for flipflop input
+d1.set()
+
+###### INCORRECT WAY ##########
+clock = Signal(cycle=1)             # Clock for pulse
+d1 = D_FlipFlop(clock, None, "d1")  # make our D flipflop
+not1 = Not(d1, "not")               # make not Gate with d1 output
+d1.set()
+d1.set_input(not1)                  # set not for flipflop input
+```
 
 ### Sample combinational Circuit
 not(x1 and x2) or x3
@@ -30,7 +52,7 @@ circuit = Or((x3, Not(And((x1,x2)))))
 print(circuit.logic())
 ```
 ### D Flipflop
-sample code of D flipflop with not gate between input and output
+Its a sample code of flipflop that its input connected to output by a not gate.
 ```python
 from flipflop.d import D_FlipFlop
 from signals.signal import Signal
