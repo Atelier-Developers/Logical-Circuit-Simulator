@@ -2,8 +2,8 @@
 
 This library help to simulate Sequential Logical Circuit. 
 
-## How to make my your Circuit
-#### Imporant Warning: 
+## How to make your Circuit
+#### Important Warning: 
 you should first determine flipflop, multiplexer, latch,... inputs then set or reset it.
 consider this example:
 ```python
