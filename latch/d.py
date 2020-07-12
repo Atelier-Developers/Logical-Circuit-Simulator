@@ -22,13 +22,15 @@ class D_Latch(Latch):
         or1.set_inputs((not2, and1))
         or2.set_inputs((not1, and2))
 
-        self.output = or1
-        self.outputp = or2
+        self.output = not1
+        self.outputp = not2
 
         self.gates = [not0, and1, and2, or1, or2, not1, not2, or1, or2]
 
     def logic(self, depend=[]):
         if self in depend:
+            if D_Latch.DEBUGMODE:
+                print(self)
             return self.output.output
         self.output.logic(depend + [self])
         if D_Latch.DEBUGMODE:

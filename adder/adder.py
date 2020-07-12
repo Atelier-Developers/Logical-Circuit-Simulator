@@ -15,8 +15,8 @@ class Adder:
     def build(self):
         pass
 
-    def set_input(self, input):
-        self.input = input
+    def set_input(self, inputs):
+        self.inputs = inputs
         self.build()
 
     def s(self):

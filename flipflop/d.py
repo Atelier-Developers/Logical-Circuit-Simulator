@@ -8,21 +8,37 @@ class D_FlipFlop(FlipFlop):
 
     def __init__(self, clock, input, name="D_FlipFlop"):
         super().__init__(clock, input, name)
+        self.master: D_Latch = None
+        self.slave: D_Latch = None
 
     def build(self):
-        not1 = Not(self.clock)
+        not1 = Not(self.clock, f"{self.name}_M_ncp")
 
-        master = D_Latch(not1, self.input, f"{self.name}_M")  # Master
-        slave = D_Latch(self.clock, master, f"{self.name}_S")  # Slave
+        self.master = D_Latch(not1, self.input, f"{self.name}_M")  # Master
+        self.slave = D_Latch(self.clock, self.master, f"{self.name}_S")  # Slave
 
-        self.output = slave.output
-        self.outputp = slave.outputp
-        self.gates = master.gates + slave.gates + [not1]
+        self.output = self.slave.output
+        self.outputp = self.slave.outputp
+        self.gates = self.master.gates + self.slave.gates + [not1]
 
     def logic(self, depend=[]):
         if self in depend:
+            if D_FlipFlop.DEBUGMODE:
+                print(self)
             return self.q()
         self.output.logic(depend + [self])
         if D_FlipFlop.DEBUGMODE:
             print(self)
         return self.q()
+
+    def set(self):
+        self.slave.output.output = 1
+        self.slave.outputp.output = 0
+        self.master.output.output = 1
+        self.master.outputp.output = 0
+
+    def reset(self):
+        self.slave.output.output = 0
+        self.slave.outputp.output = 1
+        self.master.output.output = 0
+        self.master.outputp.output = 1

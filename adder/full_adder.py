@@ -9,7 +9,8 @@ class FullAdder(Adder):
         super().__init__(inputs, name)
         self.cin = cin
 
-        self.build()
+        if inputs:
+            self.build()
 
     def build(self):
         a, b = self.inputs[0], self.inputs[1]
