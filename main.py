@@ -1,7 +1,11 @@
 from flipflop.d import D_FlipFlop
 from gate.and_gate import And
+from gate.one_gate import One
 from gate.or_gate import Or
+from gate.zero_gate import Zero
 from latch.d import D_Latch
+from multiplexer.mux2x1 import Mux2x1
+from multiplexer.mux4x2 import Mux4x2
 from signals.signal import Signal
 from gate.not_gate import Not
 
@@ -16,6 +20,8 @@ def turn_off_debug(every_thing=True):
     D_FlipFlop.DEBUGMODE = every_thing
     D_Latch.DEBUGMODE = every_thing
     Not.DEBUGMODE = every_thing
+    Mux2x1.DEBUGMODE = every_thing
+    Mux4x2.DEBUGMODE = every_thing
 
 
 def test1():
@@ -61,5 +67,11 @@ def johnson_counter(n=100):
         print("".join([str(b.q()) for b in bits]))
 
 
+def multiplexer_test():
+    mux = Mux4x2((One(), Zero(), One(), Zero()), (One(), Zero()), "my_mux")
+    mux.logic()
+    print(mux)
+
+
 turn_off_debug(False)
-johnson_counter()
+multiplexer_test()

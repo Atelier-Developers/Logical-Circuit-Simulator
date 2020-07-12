@@ -6,6 +6,8 @@ class Multiplexer:
 
         self.output = None
 
+        self.build()
+
     def q(self):
         return self.output.output
 
@@ -14,3 +16,10 @@ class Multiplexer:
 
     def logic(self, depend=[]):
         pass
+
+    def build(self):
+        pass
+
+    def set_selectors(self, s):
+        self.selectors = s
+        self.build()
