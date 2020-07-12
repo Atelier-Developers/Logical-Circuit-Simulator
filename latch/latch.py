@@ -13,7 +13,7 @@ class Latch:
 
         self.build()
 
-    def logic(self):
+    def logic(self, depend=[]):
         pass
 
     def build(self):
@@ -22,9 +22,6 @@ class Latch:
     def set_input(self, input):
         self.input = input
         self.build()
-
-    def logic(self):
-        return self.output.logic()
 
     def set(self):
         self.output.output = 1

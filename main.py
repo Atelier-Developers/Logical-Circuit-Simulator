@@ -1,3 +1,4 @@
+from adder.full_adder import FullAdder
 from flipflop.d import D_FlipFlop
 from gate.and_gate import And
 from gate.one_gate import One
@@ -73,5 +74,11 @@ def multiplexer_test():
     print(mux)
 
 
+def n_bit_adder():
+    add = FullAdder((One(), One()), Zero(), "adder")
+    add.logic()
+    print(add)
+
+
 turn_off_debug(False)
-multiplexer_test()
+n_bit_adder()
