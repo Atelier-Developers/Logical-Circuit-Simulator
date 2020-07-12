@@ -92,3 +92,53 @@ for _ in range(100):
     bits[-1].logic()
     print("".join([str(b.q()) for b in bits]))
 ```
+
+### N-bit Adder
+```python
+from flipflop.d import D_FlipFlop
+from signals.signal import Signal
+from adder.full_adder import FullAdder
+from gate.zero_gate import Zero
+
+clock = Signal()
+n = 5
+a, b = "01001", "01110"
+
+d1 = [D_FlipFlop(clock, None, f"a{i}") for i in range(n)]
+d2 = [D_FlipFlop(clock, None, f"b{i}") for i in range(n)]
+
+adder = [FullAdder(None, None, f"adder{i}") for i in range(n)]
+
+res = [D_FlipFlop(clock, None, f"r{i}") for i in range(n)]
+
+for i in range(n):
+    d1[i].set_input(d1[i])
+    d2[i].set_input(d2[i])
+    adder[i].set_input((d1[i], d2[i]))
+    adder[i].set_cin(Zero() if i == 0 else adder[i - 1].cout)
+
+    res[i].set_input(adder[i].sum)
+    res[i].reset()
+
+    if a[n-i-1] == '0':
+        d1[i].reset()
+    else:
+        d1[i].set()
+
+    if b[n-1-i] == '0':
+        d2[i].reset()
+    else:
+        d2[i].set()
+
+for _ in range(3):
+    clock.pulse()
+    for i in range(n):
+        res[i].logic()
+d1.reverse()
+d2.reverse()
+res.reverse()
+print("".join([str(r.q()) for r in d1]))
+print("".join([str(r.q()) for r in d2]))
+print("".join([str(r.q()) for r in res]))
+
+```
