@@ -5,8 +5,7 @@ from gate.zero_gate import Zero
 class Signal:
     DEBUGMODE = True
 
-    def __init__(self, cycle=None, frequency=None, init_val=Zero()):
-        self.cycle = cycle if cycle else 1 / frequency if frequency else None
+    def __init__(self, init_val=Zero()):
         self.output = init_val
 
     def pulse(self):

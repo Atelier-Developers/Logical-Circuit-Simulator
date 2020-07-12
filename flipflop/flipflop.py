@@ -2,7 +2,6 @@ class FlipFlop:
     def __init__(self, clock, input, name="FlipFlop"):
         self.clock = clock
         self.input = input
-        self.gates = []
         self.output = None
         self.outputp = None
 

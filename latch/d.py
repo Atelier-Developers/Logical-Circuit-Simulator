@@ -25,8 +25,6 @@ class D_Latch(Latch):
         self.output = not1
         self.outputp = not2
 
-        self.gates = [not0, and1, and2, or1, or2, not1, not2, or1, or2]
-
     def logic(self, depend=[]):
         if self in depend:
             if D_Latch.DEBUGMODE:

@@ -29,7 +29,7 @@ def turn_off_debug(every_thing=True):
 
 
 def test1():
-    clock = Signal(cycle=1)
+    clock = Signal()
     l1 = D_Latch(clock, None, "l1")
 
     l1.set_input(l1)
@@ -43,7 +43,7 @@ def test1():
 
 
 def test2():
-    clock = Signal(cycle=1)
+    clock = Signal()
     d1 = D_FlipFlop(clock, None, "d1")
     not1 = Not(d1, "not")
     d1.set_input(not1)
@@ -56,7 +56,7 @@ def test2():
 
 
 def johnson_counter(n=100):
-    clock = Signal(cycle=1)
+    clock = Signal()
     bits = [D_FlipFlop(clock, None, f"d{i}") for i in range(n)]
     for i in range(1, n):
         bits[i].set_input(bits[i - 1])
@@ -78,7 +78,7 @@ def multiplexer_test():
 
 
 def n_bit_adder():
-    clock = Signal(cycle=1)
+    clock = Signal()
     n = 5
     a, b = "01001", "01110"
 
@@ -122,14 +122,3 @@ def n_bit_adder():
 
 turn_off_debug(False)
 n_bit_adder()
-#
-#
-# clock = Signal(cycle=1)
-# d1 = D_FlipFlop(clock, None, "d1")
-# d1.set_input(One())
-# d1.reset()
-#
-# for _ in range(10):
-#     clock.pulse()
-#     d1.logic()
-#     print(clock.output.output, d1.q())

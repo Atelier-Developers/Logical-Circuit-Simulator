@@ -12,14 +12,14 @@ from signals.signal import Signal
 from gate.not_gate import Not
 
 ###### CORRECT WAY ##########
-clock = Signal(cycle=1)             # Clock for pulse
+clock = Signal()             # Clock for pulse
 d1 = D_FlipFlop(clock, None, "d1")  # make our D flipflop
 not1 = Not(d1, "not")               # make not Gate with d1 output
 d1.set_input(not1)                  # set not for flipflop input
 d1.set()
 
 ###### INCORRECT WAY ##########
-clock = Signal(cycle=1)             # Clock for pulse
+clock = Signal()             # Clock for pulse
 d1 = D_FlipFlop(clock, None, "d1")  # make our D flipflop
 not1 = Not(d1, "not")               # make not Gate with d1 output
 d1.set()
@@ -58,7 +58,7 @@ from flipflop.d import D_FlipFlop
 from signals.signal import Signal
 from gate.not_gate import Not
 
-clock = Signal(cycle=1)             # Clock for pulse
+clock = Signal()             # Clock for pulse
 d1 = D_FlipFlop(clock, None, "d1")  # make our D flipflop
 not1 = Not(d1, "not")               # make not Gate with d1 output
 d1.set_input(not1)                  # set not for flipflop input
@@ -78,7 +78,7 @@ from signals.signal import Signal
 from gate.not_gate import Not
 
 n = 50
-clock = Signal(cycle=1)
+clock = Signal()
 bits = [D_FlipFlop(clock, None, f"d{i}") for i in range(n)]
 for i in range(1, n):
     bits[i].set_input(bits[i - 1])

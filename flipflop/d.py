@@ -19,7 +19,6 @@ class D_FlipFlop(FlipFlop):
 
         self.output = self.slave.output
         self.outputp = self.slave.outputp
-        self.gates = self.master.gates + self.slave.gates + [not1]
 
     def logic(self, depend=[]):
         if self in depend:
