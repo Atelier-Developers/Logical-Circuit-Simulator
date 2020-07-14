@@ -28,6 +28,8 @@ d1.set_input(not1)                  # set not for flipflop input
 
 ### Sample combinational Circuit
 not(x1 and x2) or x3
+![Image of circuit](http://s12.picofile.com/file/8402887350/circuit1.png)
+
 ```python
 from gate.and_gate import And
 from gate.or_gate import Or
@@ -53,6 +55,8 @@ print(circuit.logic())
 ```
 ### D Flipflop
 Its a sample code of flipflop that its input connected to output by a not gate.
+![Image of circuit](http://s12.picofile.com/file/8402887326/circuit2.png)
+
 ```python
 from flipflop.d import D_FlipFlop
 from signals.signal import Signal
