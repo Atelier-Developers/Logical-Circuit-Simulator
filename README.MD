@@ -1,7 +1,8 @@
 # Logical Circuit Simulator in Python
 
 This library help to simulate Sequential Logical Circuit. 
-How it works? check out this [Paper](https://docs.google.com/document/d/1PxQw0eowU9g0zAxsIFedXjEQHsVnnVNxTFzNa7UyNtk/edit?usp=sharing)
+###How it works?
+check out this [Paper](https://docs.google.com/document/d/1PxQw0eowU9g0zAxsIFedXjEQHsVnnVNxTFzNa7UyNtk/edit?usp=sharing)
 ![Image of circuit](http://s12.picofile.com/file/8402889692/circuit_work.gif)
 
 
