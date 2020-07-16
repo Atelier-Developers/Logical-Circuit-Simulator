@@ -5,7 +5,7 @@ from multiplexer.multiplexer import Multiplexer
 
 
 class Mux2x1(Multiplexer):
-    DEBUGMODE = True
+    DEBUGMODE = False
 
     def __init__(self, inputs, selectors, name="Mux2x1"):
         super().__init__(inputs, selectors, name)

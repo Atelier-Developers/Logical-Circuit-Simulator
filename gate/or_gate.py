@@ -2,7 +2,7 @@ from gate.gate import Gate
 
 
 class Or(Gate):
-    DEBUGMODE = True
+    DEBUGMODE = False
 
     def __init__(self, inputs: tuple, name="Or_Gate"):
         super().__init__(inputs, name)

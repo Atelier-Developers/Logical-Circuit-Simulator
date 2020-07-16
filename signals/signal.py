@@ -3,7 +3,7 @@ from gate.zero_gate import Zero
 
 
 class Signal:
-    DEBUGMODE = True
+    DEBUGMODE = False
 
     def __init__(self, init_val=Zero()):
         self.output = init_val
