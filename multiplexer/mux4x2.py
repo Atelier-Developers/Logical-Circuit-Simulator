@@ -11,8 +11,8 @@ class Mux4x2(Multiplexer):
         super().__init__(inputs, selectors, name)
 
     def build(self):
-        s0 = self.selectors[0]
-        s1 = self.selectors[1]
+        s1 = self.selectors[0]
+        s0 = self.selectors[1]
         s0p = Not(s0, f"{self.name}_s0p")
         s1p = Not(s1, f"{self.name}_s1p")
 
