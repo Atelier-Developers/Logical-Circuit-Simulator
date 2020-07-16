@@ -2,7 +2,7 @@ from gate.gate import Gate
 
 
 class Not(Gate):
-    DEBUGMODE = True
+    DEBUGMODE = False
 
     def __init__(self, input, name="Not_Gate"):
         super().__init__(input, name)

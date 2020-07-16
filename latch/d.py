@@ -5,7 +5,7 @@ from latch.latch import Latch
 
 
 class D_Latch(Latch):
-    DEBUGMODE = True
+    DEBUGMODE = False
 
     def __init__(self, clock, input, name="D_Latch"):
         super().__init__(clock, input, name)
