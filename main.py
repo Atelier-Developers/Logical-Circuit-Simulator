@@ -1,4 +1,5 @@
 from adder.full_adder import FullAdder
+from decoder.decoder_mxn import Decoder_nxm
 from flipflop.d import D_FlipFlop
 from gate.and_gate import And
 from gate.input_gate import Input
@@ -141,5 +142,15 @@ def n_multiplexer_test():
         print(mux.logic(), end='')
 
 
+def decoder_test():
+    inputs = [Input() for _ in range(5)]
+    dec = Decoder_nxm(inputs, 5)
+
+    bitsToGates("11101", inputs)
+    for i in range(2 ** 5):
+        dec.outputs[i].logic()
+    print("".join([str(o.output) for o in dec.outputs]))
+
+
 turn_off_debug(False)
-multiplexer_test()
+decoder_test()
