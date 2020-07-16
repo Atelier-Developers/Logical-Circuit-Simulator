@@ -1,12 +1,14 @@
 from adder.full_adder import FullAdder
 from flipflop.d import D_FlipFlop
 from gate.and_gate import And
+from gate.input_gate import Input
 from gate.one_gate import One
 from gate.or_gate import Or
 from gate.xor_gate import Xor
 from gate.zero_gate import Zero
 from latch.d import D_Latch
 from multiplexer.mux2x1 import Mux2x1
+from multiplexer.mux_mxn import Mux_mxn
 from multiplexer.mux4x2 import Mux4x2
 from signals.signal import Signal
 from gate.not_gate import Not
@@ -16,7 +18,7 @@ import sys
 sys.setrecursionlimit(1000)  # default is 1000
 
 
-def turn_off_debug(every_thing=True):
+def turn_off_debug(every_thing=False):
     And.DEBUGMODE = every_thing
     Or.DEBUGMODE = every_thing
     Xor.DEBUGMODE = every_thing
@@ -98,12 +100,12 @@ def n_bit_adder():
         res[i].set_input(adder[i].sum)
         res[i].reset()
 
-        if a[n-i-1] == '0':
+        if a[n - i - 1] == '0':
             d1[i].reset()
         else:
             d1[i].set()
 
-        if b[n-1-i] == '0':
+        if b[n - 1 - i] == '0':
             d2[i].reset()
         else:
             d2[i].set()
@@ -120,5 +122,24 @@ def n_bit_adder():
     print("".join([str(r.q()) for r in res]))
 
 
+def bitsToGates(bitString, inputs):
+    for i in range(len(bitString)):
+        inputs[i].output = 0 if bitString[i] == "0" else 1
+
+
+def n_multiplexer_test():
+    inputs = [Input() for _ in range(32)]
+    selectors = [Input() for _ in range(5)]
+    mux = Mux_mxn(inputs, selectors, 5)
+
+    bitsToGates("11001110011100111001110011100101", inputs)
+
+    for i in range(32):
+        i_bin = bin(i)[2:].zfill(5)
+        bitsToGates(i_bin, selectors)
+
+        print(mux.logic(), end='')
+
+
 turn_off_debug(False)
-n_bit_adder()
+multiplexer_test()

@@ -16,10 +16,10 @@ class Mux4x2(Multiplexer):
         s0p = Not(s0, f"{self.name}_s0p")
         s1p = Not(s1, f"{self.name}_s1p")
 
-        and0 = And((self.inputs[0], s1p, s0p), f"{self.name}_and0")
-        and1 = And((self.inputs[1], s1p, s0), f"{self.name}_and1")
-        and2 = And((self.inputs[2], s1, s0p), f"{self.name}_and2")
-        and3 = And((self.inputs[3], s1, s0), f"{self.name}_and3")
+        and0 = And((s1p, s0p, self.inputs[0]), f"{self.name}_and0")
+        and1 = And((s1p, s0, self.inputs[1]), f"{self.name}_and1")
+        and2 = And((s1, s0p, self.inputs[2]), f"{self.name}_and2")
+        and3 = And((s1, s0, self.inputs[3]), f"{self.name}_and3")
 
         or0 = Or((and0, and1, and2, and3), f"{self.name}_or0")
 
