@@ -147,8 +147,9 @@ def decoder_test():
     dec = Decoder_nxm(inputs, 5)
 
     bitsToGates("11101", inputs)
-    for i in range(2 ** 5):
-        dec.outputs[i].logic()
+    dec.logic()
+    # for i in range(2 ** 5):
+    #     dec.outputs[i].logic()
     print("".join([str(o.output) for o in dec.outputs]))
 
 
