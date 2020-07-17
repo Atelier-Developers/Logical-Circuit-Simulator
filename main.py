@@ -1,4 +1,6 @@
+from Components.forwading_unit.forwarding_unit import ForwardingUnit
 from adder.full_adder import FullAdder
+from comparator.comparator import Comparator
 from decoder.decoder_mxn import Decoder_nxm
 from flipflop.d import D_FlipFlop
 from gate.and_gate import And
@@ -147,10 +149,49 @@ def decoder_test():
     dec = Decoder_nxm(inputs, 5)
 
     bitsToGates("11101", inputs)
-    for i in range(2 ** 5):
-        dec.outputs[i].logic()
+    dec.logic()
+    # for i in range(2 ** 5):
+    #     dec.outputs[i].logic()
     print("".join([str(o.output) for o in dec.outputs]))
 
 
+def comparator_test():
+    i1 = [Input() for _ in range(5)]
+    i2 = [Input() for _ in range(5)]
+    comp = Comparator((i1, i2), 5)
+
+    bitsToGates("11101", i1)
+    bitsToGates("11111", i2)
+
+    comp.logic()
+    print(comp.output)
+
+
+def forward_unit_test():
+    rd_ex_mem = [Input() for _ in range(5)]
+    rd_mem_wb = [Input() for _ in range(5)]
+    rw_ex_mem = Input()
+    rw_mem_wb = Input()
+    rs_id_ex = [Input() for _ in range(5)]
+    rt_id_ex = [Input() for _ in range(5)]
+
+    bitsToGates("11101", rd_ex_mem)
+    bitsToGates("10001", rd_mem_wb)
+    bitsToGates("11101", rs_id_ex)
+    bitsToGates("11001", rt_id_ex)
+
+    rw_ex_mem.output = 1
+    rw_mem_wb.output = 1
+
+    fu = ForwardingUnit(rd_ex_mem, rd_mem_wb, rw_ex_mem, rw_mem_wb, rs_id_ex, rt_id_ex)
+
+    fu.outputs[0][0].logic()
+    fu.outputs[0][1].logic()
+    fu.outputs[1][0].logic()
+    fu.outputs[1][1].logic()
+
+    print(fu.outputs)
+
+
 turn_off_debug(False)
-decoder_test()
+forward_unit_test()
