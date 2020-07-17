@@ -14,6 +14,10 @@ class Mux_mxn(Multiplexer):
         self.n = n
         super().__init__(inputs, selectors, name)
 
+    def set_input(self, inputs):
+        self.inputs = inputs
+        self.build()
+
     def build(self):
         s = []
         sp = []
@@ -39,4 +43,7 @@ class Mux_mxn(Multiplexer):
         if Mux_mxn.DEBUGMODE:
             print(self)
 
+        return self.output.output
+
+    def get_output(self):
         return self.output.output
