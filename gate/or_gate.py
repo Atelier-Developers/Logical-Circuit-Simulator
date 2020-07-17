@@ -13,15 +13,18 @@ class Or(Gate):
                 print(self)
             return self.output
 
+        result = 0
         for input in self.inputs:
-            o = input.logic(depend + [self])
-            if o == 1:
-                self.output = 1
-                if Or.DEBUGMODE:
-                    print(self)
-                return 1
+            current = input.logic(depend + [self])
+            if current is not None:
+                result = result or current
+            # if o == 1:
+            #     self.output = 1
+            #     if Or.DEBUGMODE:
+            #         print(self)
+            #     return 1
 
-        self.output = 0
+        self.output = result
         if Or.DEBUGMODE:
             print(self)
-        return 0
+        return self.output

@@ -33,8 +33,8 @@ class Decoder_nxm:
         self.outputs = ands
 
     def logic(self, depend=[]):
-        self.output.logic(depend + [self])
+        for output in self.outputs:
+            output.logic(depend + [self])
         if Decoder_nxm.DEBUGMODE:
             print(self)
-
-        return self.output
+        return self.outputs
