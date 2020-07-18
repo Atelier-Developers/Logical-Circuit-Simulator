@@ -7,7 +7,9 @@ class Or(Gate):
     def __init__(self, inputs: tuple, name="Or_Gate"):
         super().__init__(inputs, name)
 
-    def logic(self, depend=[]):
+    def logic(self, depend=None):
+        if depend is None:
+            depend = []
         if self in depend:
             if Or.DEBUGMODE:
                 print(self)

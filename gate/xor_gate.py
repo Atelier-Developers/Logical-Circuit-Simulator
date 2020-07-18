@@ -7,7 +7,9 @@ class Xor(Gate):
     def __init__(self, inputs: tuple, name="Xor_Gate"):
         super().__init__(inputs, name)
 
-    def logic(self, depend=[]):
+    def logic(self, depend=None):
+        if depend is None:
+            depend = []
         if self in depend:
             if Xor.DEBUGMODE:
                 print(self)

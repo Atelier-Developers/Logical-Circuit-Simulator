@@ -37,7 +37,9 @@ class FullAdder(Adder):
     def __repr__(self):
         return f"{self.name}: {self.s()}, {self.c()}"
 
-    def logic(self, depend=[]):
+    def logic(self, depend=None):
+        if depend is None:
+            depend = []
         if self in depend:
             return self.s(), self.c()
         depend.append(self)

@@ -7,7 +7,9 @@ class And(Gate):
     def __init__(self, inputs: tuple, name="And_Gate"):
         super().__init__(inputs, name)
 
-    def logic(self, depend=[]):
+    def logic(self, depend=None):
+        if depend is None:
+            depend = []
         if self in depend:
             if And.DEBUGMODE:
                 print(self)

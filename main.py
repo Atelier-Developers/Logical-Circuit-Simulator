@@ -64,7 +64,7 @@ def johnson_counter(n=100):
     bits[0].set_input(Not(bits[-1], "not"))
     bits[0].reset()
 
-    CircuitRunner.run([bits[0]], clock, n*4, [bits])
+    CircuitRunner.run([bits[0]], clock, n * 4, [bits])
 
 
 def multiplexer_test():
@@ -125,7 +125,6 @@ def n_multiplexer_test():
         CircuitRunner.run([mux], display=[[mux]])
 
 
-
 def decoder_test():
     inputs = [Input() for _ in range(5)]
     dec = Decoder_nxm(inputs, 5)
@@ -147,4 +146,4 @@ def comparator_test():
 
 turn_off_debug(False)
 
-comparator_test()
+test2()

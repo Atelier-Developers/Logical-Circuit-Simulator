@@ -7,7 +7,9 @@ class Not(Gate):
     def __init__(self, input, name="Not_Gate"):
         super().__init__(input, name)
 
-    def logic(self, depend=[]):
+    def logic(self, depend=None):
+        if depend is None:
+            depend = []
         if self in depend:
             if Not.DEBUGMODE:
                 print(self)

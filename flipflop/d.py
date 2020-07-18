@@ -20,7 +20,9 @@ class D_FlipFlop(FlipFlop):
         self.output = self.slave.output
         self.outputp = self.slave.outputp
 
-    def logic(self, depend=[]):
+    def logic(self, depend=None):
+        if depend is None:
+            depend = []
         if self in depend:
             return self.output.output
         depend.append(self)

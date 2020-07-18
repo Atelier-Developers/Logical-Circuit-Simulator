@@ -24,7 +24,9 @@ class Comparator:
 
         self.output = Not(or0, f"{self.name}_not")
 
-    def logic(self, depend=[]):
+    def logic(self, depend=None):
+        if depend is None:
+            depend = []
         if self in depend:
             return self.output.output
         depend.append(self)

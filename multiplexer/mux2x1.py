@@ -18,7 +18,9 @@ class Mux2x1(Multiplexer):
 
         self.output = or0
 
-    def logic(self, depend=[]):
+    def logic(self, depend=None):
+        if depend is None:
+            depend = []
         if self in depend:
             return self.output.output
         depend.append(self)
