@@ -22,10 +22,9 @@ class D_FlipFlop(FlipFlop):
 
     def logic(self, depend=[]):
         if self in depend:
-            if D_FlipFlop.DEBUGMODE:
-                print(self)
-            return self.q()
-        self.output.logic(depend + [self])
+            return self.output.output
+        depend.append(self)
+        self.output.logic(depend)
         if D_FlipFlop.DEBUGMODE:
             print(self)
         return self.q()

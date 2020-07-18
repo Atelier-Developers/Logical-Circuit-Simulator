@@ -12,7 +12,9 @@ class Not(Gate):
             if Not.DEBUGMODE:
                 print(self)
             return self.output
-        o = self.inputs.logic(depend + [self])
+
+        depend.append(self)
+        o = self.inputs.logic(depend)
         self.output = 0 if o == 1 else 1
         if Not.DEBUGMODE:
             print(self)

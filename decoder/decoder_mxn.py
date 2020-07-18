@@ -34,7 +34,7 @@ class Decoder_nxm:
 
     def logic(self, depend=[]):
         for output in self.outputs:
-            output.logic(depend + [self])
+            output.logic(depend)
         if Decoder_nxm.DEBUGMODE:
             print(self)
         return self.outputs

@@ -27,10 +27,9 @@ class D_Latch(Latch):
 
     def logic(self, depend=[]):
         if self in depend:
-            if D_Latch.DEBUGMODE:
-                print(self)
             return self.output.output
-        self.output.logic(depend + [self])
+        depend.append(self)
+        self.output.logic(depend)
         if D_Latch.DEBUGMODE:
             print(self)
         return self.output.output

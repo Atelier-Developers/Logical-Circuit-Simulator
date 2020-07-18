@@ -26,6 +26,10 @@ class Mux4x2(Multiplexer):
         self.output = or0
 
     def logic(self, depend=[]):
-        self.output.logic(depend + [self])
+        if self in depend:
+            return self.output.output
+        depend.append(self)
+        self.output.logic(depend)
         if Mux4x2.DEBUGMODE:
             print(self)
+        return self.output.output

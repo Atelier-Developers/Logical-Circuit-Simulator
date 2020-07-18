@@ -27,8 +27,8 @@ class Comparator:
     def logic(self, depend=[]):
         if self in depend:
             return self.output.output
-
-        self.output.logic(depend + [self])
+        depend.append(self)
+        self.output.logic(depend)
         return self.output.output
 
     def __repr__(self):

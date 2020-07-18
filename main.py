@@ -13,6 +13,7 @@ from latch.d import D_Latch
 from multiplexer.mux2x1 import Mux2x1
 from multiplexer.mux_mxn import Mux_mxn
 from multiplexer.mux4x2 import Mux4x2
+from runner.circuit_runner import CircuitRunner
 from signals.signal import Signal
 from gate.not_gate import Not
 
@@ -39,12 +40,8 @@ def test1():
 
     l1.set_input(l1)
     l1.set()
-    for _ in range(4):
-        print("####################################")
-        print(clock.output.output)
-        print(l1.output.output)
-        clock.pulse()
-        l1.logic()
+
+    CircuitRunner.run([l1], clock, 4, [[l1]])
 
 
 def test2():
@@ -54,10 +51,7 @@ def test2():
     d1.set_input(not1)
     d1.set()
 
-    for _ in range(20):
-        clock.pulse()
-        d1.logic()
-        print(f"{clock.output.output}: {d1.q()}")
+    CircuitRunner.run([d1], clock, 20, [[d1]])
 
 
 def johnson_counter(n=100):
@@ -70,22 +64,18 @@ def johnson_counter(n=100):
     bits[0].set_input(Not(bits[-1], "not"))
     bits[0].reset()
 
-    for _ in range(100):
-        clock.pulse()
-        bits[-1].logic()
-        print("".join([str(b.q()) for b in bits]))
+    CircuitRunner.run([bits[0]], clock, n*4, [bits])
 
 
 def multiplexer_test():
     mux = Mux4x2((One(), Zero(), One(), Zero()), (One(), Zero()), "my_mux")
-    mux.logic()
-    print(mux)
+    CircuitRunner.run([mux], None, None, [[mux]])
 
 
 def n_bit_adder():
     clock = Signal()
-    n = 5
-    a, b = "01001", "01110"
+    n = 200
+    a, b = "01001" * 40, "01110" * 40
 
     d1 = [D_FlipFlop(clock, None, f"a{i}") for i in range(n)]
     d2 = [D_FlipFlop(clock, None, f"b{i}") for i in range(n)]
@@ -113,16 +103,7 @@ def n_bit_adder():
         else:
             d2[i].set()
 
-    for _ in range(3):
-        clock.pulse()
-        for i in range(n):
-            res[i].logic()
-    d1.reverse()
-    d2.reverse()
-    res.reverse()
-    print("".join([str(r.q()) for r in d1]))
-    print("".join([str(r.q()) for r in d2]))
-    print("".join([str(r.q()) for r in res]))
+    CircuitRunner.run(res, clock, 3, [res])
 
 
 def bitsToGates(bitString, inputs):
@@ -141,7 +122,8 @@ def n_multiplexer_test():
         i_bin = bin(i)[2:].zfill(5)
         bitsToGates(i_bin, selectors)
 
-        print(mux.logic(), end='')
+        CircuitRunner.run([mux], display=[[mux]])
+
 
 
 def decoder_test():
@@ -149,10 +131,7 @@ def decoder_test():
     dec = Decoder_nxm(inputs, 5)
 
     bitsToGates("11101", inputs)
-    dec.logic()
-    # for i in range(2 ** 5):
-    #     dec.outputs[i].logic()
-    print("".join([str(o.output) for o in dec.outputs]))
+    CircuitRunner.run([dec], display=[dec.outputs])
 
 
 def comparator_test():
@@ -161,37 +140,11 @@ def comparator_test():
     comp = Comparator((i1, i2), 5)
 
     bitsToGates("11101", i1)
-    bitsToGates("11111", i2)
+    bitsToGates("11101", i2)
 
-    comp.logic()
-    print(comp.output)
-
-
-def forward_unit_test():
-    rd_ex_mem = [Input() for _ in range(5)]
-    rd_mem_wb = [Input() for _ in range(5)]
-    rw_ex_mem = Input()
-    rw_mem_wb = Input()
-    rs_id_ex = [Input() for _ in range(5)]
-    rt_id_ex = [Input() for _ in range(5)]
-
-    bitsToGates("11101", rd_ex_mem)
-    bitsToGates("10001", rd_mem_wb)
-    bitsToGates("11101", rs_id_ex)
-    bitsToGates("11001", rt_id_ex)
-
-    rw_ex_mem.output = 1
-    rw_mem_wb.output = 1
-
-    fu = ForwardingUnit(rd_ex_mem, rd_mem_wb, rw_ex_mem, rw_mem_wb, rs_id_ex, rt_id_ex)
-
-    fu.outputs[0][0].logic()
-    fu.outputs[0][1].logic()
-    fu.outputs[1][0].logic()
-    fu.outputs[1][1].logic()
-
-    print(fu.outputs)
+    CircuitRunner.run([comp], display=[[comp]])
 
 
 turn_off_debug(False)
-forward_unit_test()
+
+comparator_test()

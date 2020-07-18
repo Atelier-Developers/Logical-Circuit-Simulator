@@ -40,8 +40,8 @@ class FullAdder(Adder):
     def logic(self, depend=[]):
         if self in depend:
             return self.s(), self.c()
-
-        self.sum.logic(depend + [self])
-        self.cout.logic(depend + [self])
+        depend.append(self)
+        self.sum.logic(depend)
+        self.cout.logic(depend)
 
         return self.s(), self.c()

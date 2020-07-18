@@ -14,15 +14,11 @@ class And(Gate):
             return self.output
 
         result = 1
+        depend.append(self)
         for input in self.inputs:
-            current = input.logic(depend + [self])
+            current = input.logic(depend)
             if current is not None:
                 result = result and current
-            # if o == 0:
-            #     self.output = 0
-            #     if And.DEBUGMODE:
-            #         print(self)
-            #     return 0
 
         self.output = result
         if And.DEBUGMODE:

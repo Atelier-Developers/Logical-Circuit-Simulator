@@ -7,6 +7,10 @@ check out this [Paper](https://docs.google.com/document/d/1PxQw0eowU9g0zAxsIFedX
 
 
 ## How to make your Circuit
+
+**Step one:** Make your circuit and connect the gates.
+**Step two:** Pass the circuit to the runner and All is done.
+
 #### Important Warning: 
 you should first determine flipflop, multiplexer, latch,... inputs then set or reset it.
 consider this example:
@@ -29,7 +33,15 @@ not1 = Not(d1, "not")               # make not Gate with d1 output
 d1.set()
 d1.set_input(not1)                  # set not for flipflop input
 ```
-
+### Runner Inputs:
+```python
+CircuitRunner.run(
+    list_of_the_gates_that_should_run, # list of 32 flipflops of a register
+    clock=clock, # a signal that can pulse
+    n_pulse=20, # if its is None or negetive it pulse for ever, otherwise pulse n_pulse time
+    display=[[]], # list of registers( a list of flipflops ), then its a list of lists. that print them after each pulse
+)
+```
 ### Sample combinational Circuit
 not(x1 and x2) or x3
 ![Image of circuit](http://s12.picofile.com/file/8402887350/circuit1.png)
@@ -38,13 +50,14 @@ not(x1 and x2) or x3
 from gate.and_gate import And
 from gate.or_gate import Or
 from gate.not_gate import Not
+from runner.circuit_runner import CircuitRunner
 
 x1, x2, x3 = 0, 1, 0
 and1 = And((x1, x2), "x1 & x2")
 not1 = Not(and1, "not")
 or1 = Or((not1, x3), "or x3")
 
-print(or1.logic())
+CircuitRunner.run([or1], display=[[or1]])
 ```
 
 shorter way
@@ -52,10 +65,11 @@ shorter way
 from gate.and_gate import And
 from gate.or_gate import Or
 from gate.not_gate import Not
+from runner.circuit_runner import CircuitRunner
 
 x1, x2, x3 = 0, 1, 0
 circuit = Or((x3, Not(And((x1,x2)))))
-print(circuit.logic())
+CircuitRunner.run([or1], display=[[or1]])
 ```
 ### D Flipflop
 Its a sample code of flipflop that its input connected to output by a not gate.
@@ -65,6 +79,7 @@ Its a sample code of flipflop that its input connected to output by a not gate.
 from flipflop.d import D_FlipFlop
 from signals.signal import Signal
 from gate.not_gate import Not
+from runner.circuit_runner import CircuitRunner
 
 clock = Signal()             # Clock for pulse
 d1 = D_FlipFlop(clock, None, "d1")  # make our D flipflop
@@ -72,11 +87,7 @@ not1 = Not(d1, "not")               # make not Gate with d1 output
 d1.set_input(not1)                  # set not for flipflop input
 d1.set()
 
-# now run the cricuit
-for _ in range(20):
-    clock.pulse()                   # PULSING 
-    d1.logic()                      # run the Circuit in this cycle
-    print(d1)                       # showing result
+CircuitRunner.run([d1], clock=clock, n_pulse=20, display=[[d1]])
 ```
 
 ### Johnson Counter n-bit
@@ -84,6 +95,7 @@ for _ in range(20):
 from flipflop.d import D_FlipFlop
 from signals.signal import Signal
 from gate.not_gate import Not
+from runner.circuit_runner import CircuitRunner
 
 n = 50
 clock = Signal()
@@ -94,11 +106,7 @@ for i in range(1, n):
 
 bits[0].set_input(Not(bits[-1], "not"))
 bits[0].reset()
-
-for _ in range(100):
-    clock.pulse()
-    bits[-1].logic()
-    print("".join([str(b.q()) for b in bits]))
+CircuitRunner.run([bits[0]], clock=clock, n_pulse=n*4, display=[bits])
 ```
 
 ### N-bit Adder
@@ -107,6 +115,7 @@ from flipflop.d import D_FlipFlop
 from signals.signal import Signal
 from adder.full_adder import FullAdder
 from gate.zero_gate import Zero
+from runner.circuit_runner import CircuitRunner
 
 clock = Signal()
 n = 5
@@ -138,15 +147,5 @@ for i in range(n):
     else:
         d2[i].set()
 
-for _ in range(3):
-    clock.pulse()
-    for i in range(n):
-        res[i].logic()
-d1.reverse()
-d2.reverse()
-res.reverse()
-print("".join([str(r.q()) for r in d1]))
-print("".join([str(r.q()) for r in d2]))
-print("".join([str(r.q()) for r in res]))
-
+CircuitRunner.run(res, clock=clock, n_pulse=3, display=[res])
 ```

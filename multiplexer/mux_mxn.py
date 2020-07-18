@@ -39,7 +39,10 @@ class Mux_mxn(Multiplexer):
         self.output = or0
 
     def logic(self, depend=[]):
-        self.output.logic(depend + [self])
+        if self in depend:
+            return self.output.output
+        depend.append(self)
+        self.output.logic(depend)
         if Mux_mxn.DEBUGMODE:
             print(self)
 
