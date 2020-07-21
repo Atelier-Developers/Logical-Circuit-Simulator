@@ -1,4 +1,3 @@
-from Components.forwading_unit.forwarding_unit import ForwardingUnit
 from adder.full_adder import FullAdder
 from comparator.comparator import Comparator
 from decoder.decoder_mxn import Decoder_nxm
@@ -51,7 +50,10 @@ def test2():
     d1.set_input(not1)
     d1.set()
 
-    CircuitRunner.run([d1], clock, 20, [[d1]])
+    for _ in range(20):
+        clock.pulse()
+        d1.logic()
+        print(d1)
 
 
 def johnson_counter(n=100):
@@ -64,7 +66,10 @@ def johnson_counter(n=100):
     bits[0].set_input(Not(bits[-1], "not"))
     bits[0].reset()
 
-    CircuitRunner.run([bits[0]], clock, n * 4, [bits])
+    for _ in range(4 * n):
+        clock.pulse()
+        bits[0].logic()
+        print("".join([str(b.q()) for b in bits]))
 
 
 def multiplexer_test():
@@ -146,4 +151,4 @@ def comparator_test():
 
 turn_off_debug(False)
 
-test2()
+johnson_counter(800)

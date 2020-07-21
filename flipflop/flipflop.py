@@ -1,4 +1,6 @@
 class FlipFlop:
+    GATE_LVL = False
+
     def __init__(self, clock, input, name="FlipFlop"):
         self.clock = clock
         self.input = input
