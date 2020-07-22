@@ -5,7 +5,6 @@ from latch.d import D_Latch
 
 class D_FlipFlop(FlipFlop):
     DEBUGMODE = False
-    GATE_LVL = True
 
     def __init__(self, clock, input, name="D_FlipFlop"):
         super().__init__(clock, input, name)
