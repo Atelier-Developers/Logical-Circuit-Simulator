@@ -5,6 +5,7 @@ from latch.d import D_Latch
 
 class D_FlipFlop(FlipFlop):
     DEBUGMODE = False
+    GATE_LVL = True
 
     def __init__(self, clock, input, name="D_FlipFlop"):
         super().__init__(clock, input, name)
@@ -40,12 +41,12 @@ class D_FlipFlop(FlipFlop):
         else:
             o = self.q()
             depend.append(self)
-            if self.last_clock == 0 and self.clock.logic() == 1:
-                self.last_clock = self.clock.logic()
+            if self.last_clock == 0 and self.clock.logic(depend) == 1:
+                self.last_clock = self.clock.logic(depend)
                 self.output = self.input.logic(depend)
             else:
                 self.input.logic(depend)
-                self.last_clock = self.clock.logic()
+                self.last_clock = self.clock.logic(depend)
             return o
 
     def q(self):
