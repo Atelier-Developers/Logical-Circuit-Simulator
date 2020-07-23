@@ -22,6 +22,10 @@ class FlipFlop:
         self.input = input
         self.build()
 
+    def set_clock(self, clock):
+        self.clock = clock
+        self.build()
+
     def set(self):
         self.output.output = 1
         self.outputp.output = 0

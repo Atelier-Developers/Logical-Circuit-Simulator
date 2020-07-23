@@ -40,12 +40,12 @@ class D_FlipFlop(FlipFlop):
         else:
             self.output = self.output_star
             depend.append(self)
-            if self.last_clock == 0 and self.clock.logic() == 1:
-                self.last_clock = self.clock.logic()
+            if self.last_clock == 0 and self.clock.logic(depend) == 1:
+                self.last_clock = self.clock.logic(depend)
                 self.output_star = self.input.logic(depend)
             else:
                 self.input.logic(depend)
-                self.last_clock = self.clock.logic()
+                self.last_clock = self.clock.logic(depend)
             return self.output
 
     def q(self):
