@@ -6,6 +6,7 @@ class FlipFlop:
         self.input = input
         self.output = None
         self.outputp = None
+        self.output_star = None
 
         self.name = name
 

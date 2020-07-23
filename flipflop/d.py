@@ -38,15 +38,15 @@ class D_FlipFlop(FlipFlop):
                 print(self)
             return self.q()
         else:
-            o = self.q()
+            self.output = self.output_star
             depend.append(self)
             if self.last_clock == 0 and self.clock.logic() == 1:
                 self.last_clock = self.clock.logic()
-                self.output = self.input.logic(depend)
+                self.output_star = self.input.logic(depend)
             else:
                 self.input.logic(depend)
                 self.last_clock = self.clock.logic()
-            return o
+            return self.output
 
     def q(self):
         if D_FlipFlop.GATE_LVL:
@@ -61,6 +61,7 @@ class D_FlipFlop(FlipFlop):
             self.master.output.output = 1
             self.master.outputp.output = 0
         else:
+            self.output_star = 1
             self.output = 1
             self.outputp = 0
 
@@ -71,5 +72,6 @@ class D_FlipFlop(FlipFlop):
             self.master.output.output = 0
             self.master.outputp.output = 1
         else:
+            self.output_star = 0
             self.output = 0
             self.outputp = 1
