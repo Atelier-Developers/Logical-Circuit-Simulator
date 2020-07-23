@@ -1,3 +1,5 @@
+from math import log
+
 from gate.and_gate import And
 from gate.not_gate import Not
 from gate.or_gate import Or
@@ -7,11 +9,12 @@ from multiplexer.multiplexer import Multiplexer
 class Mux_mxn(Multiplexer):
     DEBUGMODE = False
 
-    def __init__(self, inputs, selectors, n, reverse=False, name=None):
+    def __init__(self, inputs, selectors, n, name=None, reverse=False):
         if name is None:
             name = f"Mux{2 ** n}x{n}"
 
         self.n = n
+        self.i_bin = None
         self.reverse: bool = reverse
         super().__init__(inputs, selectors, name)
 
@@ -23,15 +26,13 @@ class Mux_mxn(Multiplexer):
         s = []
         sp = []
         for i in range(self.n):
-            s.append(self.selectors[i])
+            s.append(self.selectors[len(self.selectors) - 2 - self.n + i] if self.reverse == True else self.selectors[i])
             sp.append(Not(self.selectors[i], f"{self.name}_sp{i}"))
 
         ands = []
         for i in range(2 ** self.n):
-            if self.reverse:
-                i_bin = bin(i)[2:].zfill(self.n)[::-1]
-            else:
-                i_bin = bin(i)[2:].zfill(self.n)
+            i_bin = bin(i)[2:].zfill(self.n)
+            self.i_bin = i_bin
 
             ands.append(
                 And(tuple([s[j] if i_bin[j] == '1' else sp[j] for j in range(self.n)])
