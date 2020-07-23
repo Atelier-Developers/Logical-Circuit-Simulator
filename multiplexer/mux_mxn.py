@@ -7,11 +7,12 @@ from multiplexer.multiplexer import Multiplexer
 class Mux_mxn(Multiplexer):
     DEBUGMODE = False
 
-    def __init__(self, inputs, selectors, n, name=None):
+    def __init__(self, inputs, selectors, n, reverse=False, name=None):
         if name is None:
             name = f"Mux{2 ** n}x{n}"
 
         self.n = n
+        self.reverse: bool = reverse
         super().__init__(inputs, selectors, name)
 
     def set_input(self, inputs):
@@ -27,7 +28,11 @@ class Mux_mxn(Multiplexer):
 
         ands = []
         for i in range(2 ** self.n):
-            i_bin = bin(i)[2:].zfill(self.n)
+            if self.reverse:
+                i_bin = bin(i)[2:].zfill(self.n)[::-1]
+            else:
+                i_bin = bin(i)[2:].zfill(self.n)
+
             ands.append(
                 And(tuple([s[j] if i_bin[j] == '1' else sp[j] for j in range(self.n)])
                     + (self.inputs[i],),
