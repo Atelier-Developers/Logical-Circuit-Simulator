@@ -26,8 +26,11 @@ class Mux_mxn(Multiplexer):
         s = []
         sp = []
         for i in range(self.n):
-            s.append(self.selectors[len(self.selectors) - 2 - self.n + i] if self.reverse == True else self.selectors[i])
-            sp.append(Not(self.selectors[i], f"{self.name}_sp{i}"))
+            s.append(
+                self.selectors[len(self.selectors) - 2 - self.n + i] if self.reverse == True else self.selectors[i])
+            sp.append(
+                Not(self.selectors[len(self.selectors) - 2 - self.n + i] if self.reverse == True else self.selectors[i],
+                    f"{self.name}_sp{i}"))
 
         ands = []
         for i in range(2 ** self.n):
