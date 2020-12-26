@@ -52,7 +52,7 @@ from gate.or_gate import Or
 from gate.not_gate import Not
 from runner.circuit_runner import CircuitRunner
 
-x1, x2, x3 = 0, 1, 0
+x1, x2, x3 = Zero(), One(), Zero()
 and1 = And((x1, x2), "x1 & x2")
 not1 = Not(and1, "not")
 or1 = Or((not1, x3), "or x3")
