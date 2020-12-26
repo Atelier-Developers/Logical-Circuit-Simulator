@@ -50,6 +50,8 @@ not(x1 and x2) or x3
 from gate.and_gate import And
 from gate.or_gate import Or
 from gate.not_gate import Not
+from gate.zero_gate import Zero
+from gate.one_gate import One
 from runner.circuit_runner import CircuitRunner
 
 x1, x2, x3 = Zero(), One(), Zero()
@@ -65,9 +67,11 @@ shorter way
 from gate.and_gate import And
 from gate.or_gate import Or
 from gate.not_gate import Not
+from gate.zero_gate import Zero
+from gate.one_gate import One
 from runner.circuit_runner import CircuitRunner
 
-x1, x2, x3 = 0, 1, 0
+x1, x2, x3 = Zero(), One(), Zero()
 circuit = Or((x3, Not(And((x1,x2)))))
 CircuitRunner.run([or1], display=[[or1]])
 ```
